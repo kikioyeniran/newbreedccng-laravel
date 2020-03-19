@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Contact;
-use App\Background;
+use App\LeadSteward;
 
-class ContactsController extends Controller
+class LeadstewardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +19,7 @@ class ContactsController extends Controller
     }
     public function index()
     {
-        $background = Background::where('page', 'contact')->get();
-        return view('admin.contacts.index')->with('background', $background);
+        //
     }
 
     /**
@@ -31,8 +29,7 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        $contacts = Contact::orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.contacts.create')->with('contacts', $contacts);
+        //
     }
 
     /**
@@ -43,22 +40,7 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'message' => 'required'
-        ]);
-
-
-        //Create Post
-        $contact = new Contact;
-        $contact->name = $request->input('name');
-        $contact->email = $request->input('email');
-        $contact->phone = $request->input('phone');
-        $contact->message = $request->input('message');
-        $contact->save();
-        return redirect('/contact')->with('success', 'Message Sent');
+        //
     }
 
     /**
@@ -80,7 +62,8 @@ class ContactsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $leadsteward = LeadSteward::find($id);
+        return view('admin.leadsteward.edit')->with('post', $leadsteward);
     }
 
     /**
@@ -92,7 +75,36 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'profile' => 'required',
+            'picture' => 'image|nullable|max:1999'
+        ]);
+
+        //Handle file up0loads
+        if ($request->hasFile('picture')) {
+            //Get file name with extension
+            $filenameWithExt = $request->file('picture')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('picture')->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            //Upload image
+            $path = $request->file('picture')->storeAs('public/pictures', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        //Create Post
+        $leadsteward = LeadSteward::find($id);
+        $leadsteward->profile = $request->input('profile');
+        if ($request->hasFile('picture')) {
+            $leadsteward->picture = $fileNameToStore;
+        }
+        $leadsteward->save();
+
+        return redirect('/leadsteward/1/edit')->with('success', 'Post Updated'); //
     }
 
     /**

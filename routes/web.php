@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+// Route::get('/', function () {
+//     return view('pages.index');
+// });
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
@@ -22,13 +22,20 @@ Route::get('/admin/dashboard', function () {
 
 
 Route::resource('blog', 'BlogController');
-Route::resource('bg', 'BgPicsController');
+Route::resource('background', 'BgPicsController');
 Route::resource('contact', 'ContactsController');
 Route::resource('ebooks', 'EbooksController');
 Route::resource('events', 'EventsController');
 Route::resource('gallery', 'GalleryController');
 Route::resource('sermons', 'SermonsController');
 Route::resource('testimony', 'TestimoniesController');
+Route::resource('landing', 'LandingPgController');
+Route::resource('leadsteward', 'LeadstewardController');
+Route::resource('vision', 'VisionController');
+// Route::resource('/', 'PagesController');
+
+Route::get('/', 'PagesController@index');
+Route::get('/about', 'PagesController@about');
 
 Auth::routes();
 

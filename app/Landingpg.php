@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Background extends Model
+class Landingpg extends Model
 {
-    protected $table  = 'backgrounds';
+    protected $table  = 'landingpgs';
     //Primary Key
     public $primaryKey = 'id';
     // Timestamsp

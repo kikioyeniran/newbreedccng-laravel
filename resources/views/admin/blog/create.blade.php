@@ -66,7 +66,7 @@
                                                     <div class="card-footer text-center bg-white">
                                                         {!!Form::open(['action'=>['BlogController@destroy', $post->id], 'method'=> 'POST'])!!}
                                                             {{Form::hidden('_method', 'DELETE')}}
-                                                            {{Form::submit('Delete Post', ['class' => 'btn btn-danger'])}}
+                                                            {{Form::submit('Delete Post', ['class' => 'btn btn-danger', "onclick" => "return confirm('Are you sure you want to delete this picture?');"])}}
                                                         {!!Form::close()!!}
                                                     {{-- <a href = "" onclick="return confirm('Are you sure you want to delete this picture?');">Delete Post</a> --}}
                                                     </div>

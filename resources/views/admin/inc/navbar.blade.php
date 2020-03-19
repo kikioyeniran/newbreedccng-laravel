@@ -14,21 +14,29 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown connection">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-fw fa-th"></i> </a>
+                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-fw fa-th"></i> </a>
 
                 </li>
                 <li class="nav-item dropdown nav-user">
-                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+                    <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-user mr-2 user-avatar-md rounded-circle"></i></a>
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                         <div class="nav-user-info">
-                            <h5 class="mb-0 text-white nav-user-name">Admin</h5>
+                            <h5 class="mb-0 text-white nav-user-name">{{ Auth::user()->name }}</h5>
+
                             <span class="status"></span><span class="ml-2">Available</span>
                         </div>
-                        <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-user mr-2"></i>Account</a>
                         <!-- <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a>-->
-                        <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"><i class="fas fa-power-off mr-2"></i>{{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
+
             </ul>
         </div>
     </nav>
@@ -52,14 +60,14 @@
                         Pages
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link active" href="about.php" aria-expanded="false"><i class="fa fa-fw fa-user-circle"></i>Landing Page <span class="badge badge-success">6</span></a>
+                        <a class="nav-link active" href="/landing/1/edit" aria-expanded="false"><i class="fa fa-fw fa-user-circle"></i>Landing Page <span class="badge badge-success">6</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/events/create" aria-expanded="false"><i class="fa fa-fw fa-rocket"></i>Events</a>
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sermon.php" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Sermons</a>
+                        <a class="nav-link" href="/sermons/create" aria-expanded="false"><i class="fas fa-fw fa-chart-pie"></i>Sermons</a>
 
                     </li>
                     <li class="nav-item ">
@@ -67,34 +75,34 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="gallery.php" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Gallery</a>
+                        <a class="nav-link" href="/gallery/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Gallery</a>
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/testimonies/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Testimonies</a>
+                        <a class="nav-link" href="/testimony/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Testimonies</a>
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="vision.php" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Vision/Mission</a>
+                        <a class="nav-link" href="/vision/1/edit" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Vision/Mission</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="background.php" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Background Photos</a>
+                        <a class="nav-link" href="/background/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Background Photos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="leadsteward.php" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Lead Steward</a>
+                        <a class="nav-link" href="/leadsteward/1/edit" aria-expanded="false"><i class="fas fa-fw fa-table"></i>Lead Steward</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="ebooks.php" aria-expanded="false"><i class="fas fa-fw fa-table"></i>E-books</a>
+                        <a class="nav-link" href="/ebooks/create" aria-expanded="false"><i class="fas fa-fw fa-table"></i>E-books</a>
                     </li>
                     <li class="nav-divider">
                         Features
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="give.php" aria-expanded="false"><i class="fas fa-fw fa-file"></i> View Give List </a>
 
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.php" aria-expanded="false"><i class="fas fa-fw fa-file"></i> View Contact List </a>
+                        <a class="nav-link" href="/contact/create" aria-expanded="false"><i class="fas fa-fw fa-file"></i> View Contact List </a>
 
                     </li>
                 </ul>

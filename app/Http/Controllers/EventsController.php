@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Event;
+use App\Background;
+use App\Blog;
 
 class EventsController extends Controller
 {
@@ -19,7 +21,11 @@ class EventsController extends Controller
     }
     public function index()
     {
-        //
+        $background = Background::where('page', 'events')->get();
+        $latest = Event::orderBy('id', 'desc')->take(1)->get();
+        $blog = Blog::orderBy('id', 'desc')->take(4)->get();
+        $events = Event::orderBy('created_at', 'desc')->paginate(6);
+        return view('admin.events.index')->with('events', $events)->with('blog', $blog)->with('latest', $latest)->with('background', $background);
     }
 
     /**
@@ -168,6 +174,6 @@ class EventsController extends Controller
             Storage::delete('public/pictures/' . $event->picture);
         }
         $event->delete();
-        return redirect('/events/create')->with('success', 'Post Updated');
+        return redirect('/events/create')->with('success', 'Post Deleted');
     }
 }

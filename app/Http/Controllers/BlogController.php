@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Blog;
+use App\Background;
 
 class BlogController extends Controller
 {
@@ -20,8 +21,10 @@ class BlogController extends Controller
 
     public function index()
     {
-        //
-
+        $background = Background::where('page', 'blog')->get();
+        $latest = Blog::orderBy('id', 'desc')->take(1)->get();
+        $blog = Blog::orderBy('created_at', 'desc')->paginate(6);
+        return view('admin.blog.index')->with('blog', $blog)->with('latest', $latest)->with('background', $background);
     }
 
     /**
@@ -90,7 +93,10 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        $background = Background::where('page', 'single-blog')->get();
+        $blog = Blog::find($id);
+        $latest = Blog::orderBy('id', 'desc')->take(3)->get();
+        return view('admin.blog.show')->with('blog', $blog)->with('latest', $latest)->with('background', $background);;
     }
 
     /**
@@ -143,7 +149,7 @@ class BlogController extends Controller
             $fileNameToStore = 'noimage.jpg';
         }
 
-        //Create Post
+        //Update Post
         $blog = Blog::find($id);
         $blog->title = $request->input('title');
         $blog->author = $request->input('author');
@@ -175,6 +181,6 @@ class BlogController extends Controller
             Storage::delete('public/pictures/' . $blog->picture);
         }
         $blog->delete();
-        return redirect('/blog/create')->with('success', 'Post Updated');
+        return redirect('/blog/create')->with('success', 'Post Deleted');
     }
 }

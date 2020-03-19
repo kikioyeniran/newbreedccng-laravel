@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Newbreed Christian Community</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.png">
 
     {{-- <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script> --}}

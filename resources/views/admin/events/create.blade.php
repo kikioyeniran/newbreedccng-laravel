@@ -120,7 +120,7 @@
                                             </div>
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-                                                {{Form::submit('Submit', ['class'=> 'btn btn-primary'])}}
+                                                {{Form::submit('Submit', ['class'=> 'btn btn-primary', "onclick" => "return confirm('Are you sure you want to delete this picture?');"])}}
                                             </div>
                                         </div>
                                     {!! Form::close() !!}

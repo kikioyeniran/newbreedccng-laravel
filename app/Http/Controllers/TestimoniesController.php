@@ -166,6 +166,6 @@ class TestimoniesController extends Controller
             Storage::delete('public/pictures/' . $testimony->picture);
         }
         $testimony->delete();
-        return redirect('/testimony/create')->with('success', 'Post Updated');
+        return redirect('/testimony/create')->with('success', 'Post Deleted');
     }
 }

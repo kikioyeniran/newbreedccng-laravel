@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Landingpg;
+use App\Vision;
 
-class LandingPgController extends Controller
+class VisionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -62,8 +62,8 @@ class LandingPgController extends Controller
      */
     public function edit($id)
     {
-        $landing = Landingpg::find($id);
-        return view('admin.landing.edit')->with('post', $landing);
+        $vision = vision::find($id);
+        return view('admin.vision.edit')->with('post', $vision);
     }
 
     /**
@@ -76,35 +76,51 @@ class LandingPgController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'text' => 'required',
-            'picture' => 'image|nullable|max:1999'
+            'vision' => 'image|nullable|max:1999',
+            'mission' => 'image|nullable|max:1999'
         ]);
 
         //Handle file up0loads
-        if ($request->hasFile('picture')) {
+        if ($request->hasFile('vision')) {
             //Get file name with extension
-            $filenameWithExt = $request->file('picture')->getClientOriginalName();
+            $filenameWithExt = $request->file('vision')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just ext
-            $extension = $request->file('picture')->getClientOriginalExtension();
+            $extension = $request->file('vision')->getClientOriginalExtension();
             //Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $visionfileNameToStore = $filename . '_' . time() . '.' . $extension;
             //Upload image
-            $path = $request->file('picture')->storeAs('public/pictures', $fileNameToStore);
+            $path = $request->file('vision')->storeAs('public/pictures', $visionfileNameToStore);
         } else {
-            $fileNameToStore = 'noimage.jpg';
+            $visionfileNameToStore = 'noimage.jpg';
+        }
+        if ($request->hasFile('mission')) {
+            //Get file name with extension
+            $filenameWithExt = $request->file('mission')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $request->file('mission')->getClientOriginalExtension();
+            //Filename to store
+            $missionfileNameToStore = $filename . '_' . time() . '.' . $extension;
+            //Upload image
+            $path = $request->file('mission')->storeAs('public/pictures', $missionfileNameToStore);
+        } else {
+            $missionfileNameToStore = 'noimage.jpg';
         }
 
         //Create Post
-        $landing = Landingpg::find($id);
-        $landing->text = $request->input('text');
-        if ($request->hasFile('picture')) {
-            $landing->picture = $fileNameToStore;
+        $vision = Vision::find($id);
+        if ($request->hasFile('vision')) {
+            $vision->vision = $visionfileNameToStore;
         }
-        $landing->save();
+        if ($request->hasFile('mission')) {
+            $vision->mission = $missionfileNameToStore;
+        }
+        $vision->save();
 
-        return redirect('/landing/1/edit')->with('success', 'Post Updated');
+        return redirect('/vision/1/edit')->with('success', 'Post Updated'); //
     }
 
     /**
